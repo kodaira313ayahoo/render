@@ -51,7 +51,7 @@ def convert_mp3_to_mp4():
         download_process = subprocess.run(['curl', '-o', mp3_file_name, mp3_url], check=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
         # 10秒間待機
-        time.sleep(30)
+        time.sleep(20)
 
         # ダウンロードが正常に終了したかどうかを確認
         if download_process.returncode == 0:
