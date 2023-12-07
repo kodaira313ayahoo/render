@@ -4,32 +4,52 @@
 from flask import Flask, request
 from flask import Flask
 from moviepy.editor import AudioFileClip
+import requests
 
 app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return 'Hello, Worldaaaaaa!'
+    return 'bbbbb'
+
+# MP3音声ファイルのダウンロード
+def download_mp3(mp3_url, mp3_filename):
+    response = requests.get(mp3_url)
+    with open(mp3_filename, 'wb') as file:
+        file.write(response.content)
 
 @app.route('/convert', methods=['GET'])
 def convert_mp3_to_mp4():
     try:
         # MP3音声ファイルのURLを取得
-        mp3_url = request.args.get('mp3_url')
+        base_url = "https://drive.google.com/uc?id="
+        drive_id = request.args.get('drive_id')
+        file_name = request.args.get('file_name')
+
+        mp3_url = f"{base_url}{drive_id}"
+        mp3_file_name = f"{file_name}.mp3"
+        mp4_file_name = f"{file_name}.mp4"
+
+        # ダウンロード先のディレクトリにあるすべての.mp3および.mp4ファイルを削除
+        for file_name in os.listdir('.'):
+            if file_name.endswith('.mp3') or file_name.endswith('.mp4'):
+                os.remove(file_name)
 
         # MP3ファイルをダウンロードして、一時的に保存
-        mp3_file_path = 'temp.mp3'
-        # ここにダウンロード処理を追加
-
+        # download_mp3(mp3_url, mp3_file_name)
+        os.system(f'curl -o {mp3_file_name} {mp3_url}')
+        
         # MP3をMP4に変換
-        mp4_file_path = mp3_file_path.replace('.mp3', '.mp4')
-        audio_clip = AudioFileClip(mp3_file_path)
+        audio_clip = AudioFileClip(mp3_file_name)
         audio_clip.write_videofile(mp4_file_path, codec='libx264', audio_codec='aac')
 
         # 変換が完了したら一時ファイルを削除
-        # ここにファイル削除処理を追加
+        os.remove(mp3_file_name)
 
-        return f'Success: {mp4_file_path}'
+        # ダウンロード可能なURLを生成
+        download_url = f'http://aaaa.com/{mp4_file_name}'
+        # return jsonify({'download_url': download_url})
+        return f'Success: {download_url}'
 
     except Exception as e:
         return f'Error: {str(e)}'
