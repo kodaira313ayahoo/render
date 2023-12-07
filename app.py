@@ -6,6 +6,7 @@ from flask import Flask
 from moviepy.editor import AudioFileClip
 import requests
 import os
+import subprocess
 
 app = Flask(__name__)
 
@@ -38,7 +39,8 @@ def convert_mp3_to_mp4():
 
         # MP3ファイルをダウンロードして、一時的に保存
         # download_mp3(mp3_url, mp3_file_name)
-        os.system(f'curl -o {mp3_file_name} {mp3_url}')
+        # os.system(f'curl -o {mp3_file_name} {mp3_url}')
+        subprocess.run(['curl', '-o', mp3_file_name, mp3_url], check=True)
         
         # MP3をMP4に変換
         audio_clip = AudioFileClip(mp3_file_name)
