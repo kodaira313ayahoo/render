@@ -37,11 +37,20 @@ def convert_mp3_to_mp4():
             if file_name.endswith('.mp3') or file_name.endswith('.mp4'):
                 os.remove(file_name)
 
+        # ダウンロード先のディレクトリにあるすべてのファイルを一覧表示
+        all_files = os.listdir('.')
+        print('ダウンロード先のディレクトリにあるすべてのファイル:')
+        for file_name in all_files:
+            print(file_name)
+        
         # MP3ファイルをダウンロードして、一時的に保存
         # download_mp3(mp3_url, mp3_file_name)
         # os.system(f'curl -o {mp3_file_name} {mp3_url}')
         # subprocess.run(['curl', '-o', mp3_file_name, mp3_url], check=True)
         download_process = subprocess.run(['curl', '-o', mp3_file_name, mp3_url], check=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+        # 10秒間待機
+        time.sleep(10)
 
         # ダウンロードが正常に終了したかどうかを確認
         if download_process.returncode == 0:
