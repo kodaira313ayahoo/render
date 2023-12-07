@@ -40,8 +40,17 @@ def convert_mp3_to_mp4():
         # MP3ファイルをダウンロードして、一時的に保存
         # download_mp3(mp3_url, mp3_file_name)
         # os.system(f'curl -o {mp3_file_name} {mp3_url}')
-        subprocess.run(['curl', '-o', mp3_file_name, mp3_url], check=True)
+        # subprocess.run(['curl', '-o', mp3_file_name, mp3_url], check=True)
+        download_process = subprocess.run(['curl', '-o', mp3_file_name, mp3_url], check=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
+        # ダウンロードが正常に終了したかどうかを確認
+        if download_process.returncode == 0:
+            print(f'MP3ファイルがダウンロードされました: {mp3_file_name}')
+
+        else:
+            print('MP3ファイルのダウンロードに失敗しました')
+            print('エラーメッセージ:', download_process.stderr.decode())
+        
         # ファイルが正常にダウンロードされたかどうかを確認
         if os.path.isfile(mp3_file_name):
             print(f'MP3ファイルがダウンロードされました: {mp3_file_name}')
