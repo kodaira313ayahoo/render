@@ -40,10 +40,11 @@ def convert_mp3_to_mp4():
 
         
         # MP3ファイルをダウンロードして、一時的に保存
-        # download_mp3(mp3_url, mp3_file_name)
+        print(f'mp3_url: {mp3_url}')
+        download_mp3(mp3_url, mp3_file_name)
         # os.system(f'curl -o {mp3_file_name} {mp3_url}')
         # subprocess.run(['curl', '-o', mp3_file_name, mp3_url], check=True)
-        download_process = subprocess.run(['curl', '-o', mp3_file_name, mp3_url], check=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        #download_process = subprocess.run(['curl', '-o', mp3_file_name, mp3_url], check=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
         # 10秒間待機
         #time.sleep(20)
