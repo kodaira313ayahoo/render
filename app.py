@@ -8,6 +8,7 @@ import requests
 import os
 import subprocess
 import time
+import magic
 
 app = Flask(__name__)
 
@@ -71,6 +72,9 @@ def convert_mp3_to_mp4():
         else:
             print('MP3ファイルのダウンロードに失敗しました')
 
+        # python-magic モジュールでMIMEタイプを取得
+        print(f'-- python-magic: {magic.from_file(mp3_file_name, mime=True)}')
+        
         # return jsonify({'files': all_files})
         download_url = f'https://convert-mp3-to-mp4.onrender.com/{mp3_file_name}'
         #return jsonify({'download_url': download_url})
