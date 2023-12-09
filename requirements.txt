@@ -2,3 +2,4 @@ Flask
 Gunicorn
 ffmpeg
 moviepy
+python-magic
