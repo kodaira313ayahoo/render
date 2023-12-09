@@ -57,20 +57,20 @@ def convert_mp3_to_mp4():
             print(file_name)
         
         # ダウンロードが正常に終了したかどうかを確認
-        if download_process.returncode == 0:
-            print(f'MP3ファイルがダウンロードされました: {mp3_file_name}')
-            result = 'success'
+        #if download_process.returncode == 0:
+        #    print(f'MP3ファイルがダウンロードされました: {mp3_file_name}')
+        #    result = 'success'
 
-        else:
-            print('MP3ファイルのダウンロードに失敗しました')
-            print('エラーメッセージ:', download_process.stderr.decode())
-            result = 'fail'
+        #else:
+        #    print('MP3ファイルのダウンロードに失敗しました')
+        #    print('エラーメッセージ:', download_process.stderr.decode())
+        #    result = 'fail'
         
         # ファイルが正常にダウンロードされたかどうかを確認
-        if os.path.isfile(mp3_file_name):
-            print(f'MP3ファイルがダウンロードされました: {mp3_file_name}')
-        else:
-            print('MP3ファイルのダウンロードに失敗しました')
+        #if os.path.isfile(mp3_file_name):
+        #    print(f'MP3ファイルがダウンロードされました: {mp3_file_name}')
+        #else:
+        #    print('MP3ファイルのダウンロードに失敗しました')
 
         # python-magic モジュールでMIMEタイプを取得
         print(f'-- python-magic: {magic.from_file(mp3_file_name, mime=True)}')
