@@ -1,7 +1,7 @@
 # 必要なライブラリのインストール
 # pip install Flask moviepy
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 # from flask import Flask
 from moviepy.editor import AudioFileClip
 import requests
@@ -72,8 +72,12 @@ def convert_mp3_to_mp4():
 
         # return jsonify({'files': all_files})
         download_url = f'https://convert-mp3-to-mp4.onrender.com/{mp3_file_name}'
-        return jsonify({'download_url': download_url})
+        #return jsonify({'download_url': download_url})
         # return jsonify({'download_url': download_url})
+        filepath = "./mp3_file_name"
+        return send_file(filepath, as_attachment=True,
+                         attachment_filename=mp3_file_name,
+                         mimetype='audio/mpeg')
         return result
 
         # MP3をMP4に変換
