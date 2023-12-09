@@ -70,6 +70,7 @@ def convert_mp3_to_mp4():
         else:
             print('MP3ファイルのダウンロードに失敗しました')
 
+        return flask.jsonify({'files': all_files})
         return result
 
         # MP3をMP4に変換
