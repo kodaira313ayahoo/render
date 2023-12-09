@@ -3,7 +3,8 @@
 
 from flask import Flask, request, jsonify, send_file
 # from flask import Flask
-from moviepy.editor import AudioFileClip
+#from moviepy.editor import AudioFileClip
+from moviepy.editor import AudioFileClip, ImageClip, CompositeVideoClip
 import requests
 import os
 import subprocess
