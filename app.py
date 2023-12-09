@@ -38,7 +38,6 @@ def convert_mp3_to_mp4():
             if file_name.endswith('.mp3') or file_name.endswith('.mp4'):
                 os.remove(file_name)
 
-
         
         # MP3ファイルをダウンロードして、一時的に保存
         # download_mp3(mp3_url, mp3_file_name)
@@ -58,17 +57,21 @@ def convert_mp3_to_mp4():
         # ダウンロードが正常に終了したかどうかを確認
         if download_process.returncode == 0:
             print(f'MP3ファイルがダウンロードされました: {mp3_file_name}')
+            result = 'success'
 
         else:
             print('MP3ファイルのダウンロードに失敗しました')
             print('エラーメッセージ:', download_process.stderr.decode())
+            result = 'fail'
         
         # ファイルが正常にダウンロードされたかどうかを確認
         if os.path.isfile(mp3_file_name):
             print(f'MP3ファイルがダウンロードされました: {mp3_file_name}')
         else:
             print('MP3ファイルのダウンロードに失敗しました')
-        
+
+        return result
+
         # MP3をMP4に変換
         audio_clip = AudioFileClip(mp3_file_name)
         audio_clip.write_videofile(mp4_file_path, codec='libx264', audio_codec='aac')
