@@ -75,7 +75,7 @@ def convert_mp3_to_mp4():
         #    print('MP3ファイルのダウンロードに失敗しました')
 
         # python-magic モジュールでMIMEタイプを取得
-        print(f'-- python-magic: {magic.from_file(mp3_file_name, mime=True)}')
+        print(f'python-magic for mp3_file_name: {magic.from_file(mp3_file_name, mime=True)}')
         
         # return jsonify({'files': all_files})
         download_url = f'https://convert-mp3-to-mp4.onrender.com/{mp3_file_name}'
@@ -100,11 +100,14 @@ def convert_mp3_to_mp4():
         # ビデオをファイルに書き出す
         video_clip.write_videofile(mp4_file_name, codec='libx264', audio_codec='aac', fps=24)
 
+        # python-magic モジュールでMIMEタイプを取得
+        print(f'python-magic for mp4_file_name: {magic.from_file(mp4_file_name, mime=True)}')
+
         # 変換が完了したら一時ファイルを削除
         os.remove(mp3_file_name)
 
         # ダウンロード可能なURLを生成
-        download_url = f'https://convert-mp3-to-mp4.onrender.com/{mp4_file_name}'
+        #download_url = f'https://convert-mp3-to-mp4.onrender.com/{mp4_file_name}'
         # return jsonify({'download_url': download_url})
         #return f'Success: {download_url}'
         return send_file(mp4_file_name, as_attachment=True,
