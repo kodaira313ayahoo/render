@@ -34,6 +34,8 @@ def convert_mp3_to_mp4():
         mp3_file_name = f"{file_name}.mp3"
         mp4_file_name = f"{file_name}.mp4"
 
+        image_file_name = "input_image.jpeg"
+
         # ダウンロード先のディレクトリにあるすべての.mp3および.mp4ファイルを削除
         for file_name in os.listdir('.'):
             if file_name.endswith('.mp3') or file_name.endswith('.mp4'):
@@ -79,15 +81,24 @@ def convert_mp3_to_mp4():
         download_url = f'https://convert-mp3-to-mp4.onrender.com/{mp3_file_name}'
         #return jsonify({'download_url': download_url})
         # return jsonify({'download_url': download_url})
-        filepath = f'./{mp3_file_name}'
-        return send_file(mp3_file_name, as_attachment=True,
-                         #attachment_filename=mp3_file_name,
-                         mimetype='audio/mpeg')
-        return result
+        
+        # mp3音声ファイルをそのまま返してみる
+        # return send_file(mp3_file_name, as_attachment=True,
+        #                 #attachment_filename=mp3_file_name,
+        #                 mimetype='audio/mpeg')
+        #return result
 
-        # MP3をMP4に変換
+        # MP3音声ファイルを読み込む
         audio_clip = AudioFileClip(mp3_file_name)
-        audio_clip.write_videofile(mp4_file_path, codec='libx264', audio_codec='aac')
+
+        # 画像ファイルを読み込んでビデオクリップを作成
+        image_clip = ImageClip(image_file_name, duration=audio_clip.duration)
+
+        # 音声と画像を結合してビデオクリップを作成
+        video_clip = CompositeVideoClip([image_clip.set_duration(audio_clip.duration).set_audio(audio_clip)])
+
+        # ビデオをファイルに書き出す
+        video_clip.write_videofile(mp4_file_name, codec='libx264', audio_codec='aac', fps=24)
 
         # 変換が完了したら一時ファイルを削除
         os.remove(mp3_file_name)
@@ -95,8 +106,11 @@ def convert_mp3_to_mp4():
         # ダウンロード可能なURLを生成
         download_url = f'https://convert-mp3-to-mp4.onrender.com/{mp4_file_name}'
         # return jsonify({'download_url': download_url})
-        return f'Success: {download_url}'
-
+        #return f'Success: {download_url}'
+        return send_file(mp4_file_name, as_attachment=True,
+                         download_name=mp4_file_name,
+                         mimetype='video/mpeg')
+    
     except Exception as e:
         return f'Error: {str(e)}'
 
